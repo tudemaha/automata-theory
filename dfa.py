@@ -56,6 +56,6 @@ def transition(string, start_state, finish_state, transitions):
         print(current_state, end ='\n\n')
 
         if current_state in finish_state:
-            print('STRING DITERIMA!')
+            print('Status: STRING DITERIMA!')
         else:
-            print('STRING DITOLAK!')
+            print('Status: STRING DITOLAK!')
