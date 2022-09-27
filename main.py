@@ -5,8 +5,11 @@ def __main__():
 
     alphabets = ['0', '1']
 
-    print('Masukkan string untuk dicek: ', end='')
-    string = input()
+    string = ''
+    while(string == ''):
+        print('Masukkan string untuk dicek: ', end='')
+        string = input()
+
 
     for char in string:
         if char not in alphabets:
@@ -14,19 +17,19 @@ def __main__():
             finish_message()
             exit()
 
-    while(True):
-        print('\nPilihan metode pengecekan:')
-        print('1. Substring 101')
-        print('2. Prefix 101')
-        print('3. Suffix 101')
-        print('Masukkan pilihan: ', end='')
+    print('\nPilihan metode pengecekan:')
+    print('1. Substring 101')
+    print('2. Prefix 101')
+    print('3. Suffix 101')
 
+    while(True):
+        print('Masukkan pilihan: ', end='')
         choice = input()
         accept_choice = ['1', '2', '3']
         if choice in accept_choice:
             break
         else:
-            print('Masukan tidak valid!')
+            print('Masukan tidak valid!\n')
 
     printFirstExtended(string)
     extended(string = string)
