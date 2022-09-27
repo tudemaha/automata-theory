@@ -29,19 +29,8 @@ def extended(start = '', finish = '', string = ''):
     else:
         print(start + delta + '(' + cap_delta + '(q0, ' + epsilon + '), ' + parse[-1] + ')' + finish, end='\n\n')
 
-def substring(string, start_state = 'q0'):
+def transition(string, start_state, finish_state, transitions):
     parse = [string[0], string[1:]]
-    finish_state = ['q3']
-    transitions = {
-        ('q0', '0'): 'q0',
-        ('q0', '1'): 'q1',
-        ('q1', '0'): 'q2',
-        ('q1', '1'): 'q1',
-        ('q2', '0'): 'q0',
-        ('q2', '1'): 'q3',
-        ('q3', '0'): 'q3',
-        ('q3', '1'): 'q3',
-    }
 
     if parse[1] != '':
 
@@ -59,7 +48,7 @@ def substring(string, start_state = 'q0'):
         
         print(start + mid + finish, end = '\n\n')
 
-        substring(parse[1], current_state)
+        transition(parse[1], current_state, finish_state, transitions)
 
     else:
 

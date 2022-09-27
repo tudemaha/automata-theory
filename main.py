@@ -28,16 +28,27 @@ def __main__():
         else:
             print('Masukan tidak valid!')
 
-    match choice:
-        case '1':
-            printFirstExtended(string)
-            extended(string = string)
-            printFirstResult(string)
-            substring(string)
-        case '2':
-            print('ini ')
-        case '3':
-            print('ini suffix')
+    printFirstExtended(string)
+    extended(string = string)
+    printFirstResult(string)
+
+    if choice == '1':
+        transition(string, 'q0', 'q3', {
+            ('q0', '0'): 'q0',
+            ('q0', '1'): 'q1',
+            ('q1', '0'): 'q2',
+            ('q1', '1'): 'q1',
+            ('q2', '0'): 'q0',
+            ('q2', '1'): 'q3',
+            ('q3', '0'): 'q3',
+            ('q3', '1'): 'q3',
+        })
+
+    elif choice == '2':
+        print('ini 2')
+
+    elif choice == '3':
+        print('ini 3')
     
     finish_message()
 
