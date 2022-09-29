@@ -27,7 +27,7 @@ def extended(start = '', finish = '', string = ''):
         print(start + cap_delta + '(q0, ' + parse[0] + ')' + finish, end='\n\n')
         extended(start, finish, parse[0])
     else:
-        print(start + delta + '(' + cap_delta + '(q0, ' + epsilon + '), ' + parse[-1] + ')' + finish, end='\n\n')
+        print(start + delta + '(' + cap_delta + '(q0, ' + epsilon + '), ' + parse[1] + ')' + finish, end='\n\n')
 
 def transition(string, start_state, finish_state, transitions):
     parse = [string[0], string[1:]]
