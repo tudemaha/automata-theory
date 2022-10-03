@@ -1,3 +1,5 @@
+from nfa import *
+
 def __main__():
     print('===== PROGRAM PENGECEKAN STRING (NFA) =====', end = '\n\n')
 
@@ -27,12 +29,41 @@ def __main__():
         else:
             print('Masukan tidak valid!\n')
     
+    print_first('q0')
+
     if choice == '1':
-        print('ini satu')
+        result = transition(string, 'q0', {'q2'}, {
+            ('q0', '0'): {'q2', 'q3'},
+            ('q0', '1'): {'q1', 'q2'},
+            ('q1', '0'): {'q1'},
+            ('q1', '1'): {'q1', 'q2'},
+            ('q3', '0'): {'q2', 'q3'},
+            ('q3', '1'): {'q3'}
+        })
+
     elif choice == '2':
-        print('ini 2')
+        result = transition(string, 'q0', {'q4'}, {
+            ('q0', '1'): {'q1'},
+            ('q1', '0'): {'q2'},
+            ('q1', '1'): {'q1'},
+            ('q2', '0'): {'q3'},
+            ('q2', '1'): {'q2'},
+            ('q3', '0'): {'q4'},
+            ('q3', '1'): {'q3'},
+            ('q4', '0'): {'q2'},
+            ('q4', '1'): {'q4'}
+        })
     elif choice == '3':
-        print('ini 3')
+        result = transition(string, 'q0', {'q2'}, {
+            ('q0', '0'): {'q1'},
+            ('q1', '0'): {'q1'},
+            ('q1', '1'): {'q2'},
+            ('q2', '0'): {'q2'},
+            ('q2', '1'): {'q1'}
+        })
+
+    if result: print('Status: STRING DITERIMA')
+    else: print('Status: STRING DITOLAK')
 
     exit_message()
 

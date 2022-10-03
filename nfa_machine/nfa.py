@@ -5,7 +5,7 @@ union = '\u222a'
 empty = '\u2205'
 
 def print_first(start_state):
-    print(cap_delta + '(' + start_state + ', ' + epsilon + ') = {' + start_state + '}')
+    print('\n' + cap_delta + '(' + start_state + ', ' + epsilon + ') = {' + start_state + '}', end = '\n\n')
     
 
 def transition(string, start_state, finish_state, transitions):
@@ -15,13 +15,13 @@ def transition(string, start_state, finish_state, transitions):
     for i in range(len(string)):
         result = []
         current_string = string[:i + 1]
-        start += ', ' + current_string + ') = '
+        start += ', ' + current_string + ') '
 
         for i, element in enumerate(current_state):
             if i == 0:
-                start += delta + '(' + element + ', ' + current_string[-1] + ') '
+                start += '= ' + delta + '(' + element + ', ' + current_string[-1] + ') '
             else:
-                start += union + ' ' + delta + '(' + element + ', ' + current_string[-1] + ') '
+                start += '= ' + union + ' ' + delta + '(' + element + ', ' + current_string[-1] + ') '
             
             if (element, current_string[-1]) in transitions:
                 result.append(transitions[(element, current_string[-1])])
@@ -53,17 +53,3 @@ def transition(string, start_state, finish_state, transitions):
         return True
     else:
         return False
-
-print(transition('1010', 'q0', {'q2'}, {
-    ('q0', '0'): {'q3', 'q2'},
-    ('q0', '1'): {'q1', 'q2'},
-    ('q1', '0'): {'q1'},
-    ('q1', '1'): {'q1', 'q2'},
-    ('q3', '0'): {'q3', 'q2'},
-    ('q3', '1'): {'q3'}
-}))
-        
-
-
-        
-
