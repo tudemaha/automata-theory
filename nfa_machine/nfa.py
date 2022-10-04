@@ -21,26 +21,26 @@ def transition(string, start_state, finish_state, transitions):
             if i == 0:
                 start += '= ' + delta + '(' + element + ', ' + current_string[-1] + ') '
             else:
-                start += '= ' + union + ' ' + delta + '(' + element + ', ' + current_string[-1] + ') '
+                start += union + ' ' + delta + '(' + element + ', ' + current_string[-1] + ') '
             
             if (element, current_string[-1]) in transitions:
                 result.append(transitions[(element, current_string[-1])])
                 if i == 0:
-                    mid = '= ' + str(transitions[(element, current_string[-1])])
+                    mid = '= ' + str(transitions[(element, current_string[-1])]) + ' '
                 else:
-                    mid += ' ' + union + ' ' + str(transitions[(element, current_string[-1])]) + ' '
+                    mid += union + ' ' + str(transitions[(element, current_string[-1])]) + ' '
             else:
                 if i == 0:
-                    mid = '= ' + empty
+                    mid = '= ' + empty + ' '
                 else:
-                    mid += ' ' + union + ' ' + empty + ' '
+                    mid += union + ' ' + empty + ' '
             
         current_state = set().union(*result)
 
         if len(current_state) != 0:
-            finish = '= ' + str(current_state)
+            finish = '= ' + str(current_state) + ' '
         else:
-            finish = '= ' + empty
+            finish = '= ' + empty + ' '
 
         if mid != finish:
             print(start + mid + finish, end = '\n\n')
