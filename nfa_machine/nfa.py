@@ -11,7 +11,7 @@ def print_first(start_state):
     
 # NFA computation and print step by step to terminal
 def transition(string, start_state, finish_state, transitions):
-    # store current state(s) will be checked, start from start state
+    # store current state(s) will be checked, starting from start state
     current_state = {start_state}
     # make start pattern to print in terminal
     start = cap_delta + '(' + start_state
@@ -27,14 +27,14 @@ def transition(string, start_state, finish_state, transitions):
 
         # iterate current state(s) with current alphabet
         for i, element in enumerate(current_state):
-            # print by order in terminal (if first, use '=' else use union symbol)
+            # add to start pattern by order of iteration (if first, use '=' else use union symbol)
             if i == 0:
                 start += '= ' + delta + '(' + element + ', ' + current_string[-1] + ') '
             else:
                 start += union + ' ' + delta + '(' + element + ', ' + current_string[-1] + ') '
             
             # [core process of NFA]
-            # if combination of current alphabet and current state(s) in transition function
+            # if combination of current alphabet and current state(s) available in transition function
             # append the result to 'result' variable
             if (element, current_string[-1]) in transitions:
                 result.append(transitions[(element, current_string[-1])])
@@ -45,7 +45,7 @@ def transition(string, start_state, finish_state, transitions):
                     mid += union + ' ' + str(transitions[(element, current_string[-1])]) + ' '
             # if the combination not found in transition function
             else:
-                # do nothing to 'result' variable, just add pattern
+                # do nothing to 'result' variable, just add mid pattern
                 if i == 0:
                     mid = '= ' + empty + ' '
                 else:
@@ -55,7 +55,7 @@ def transition(string, start_state, finish_state, transitions):
         # used for next checking
         current_state = set().union(*result)
 
-        # finish pattern to print based on number of element of current_state
+        # finish pattern based on number of element of current_state
         if len(current_state) != 0:
             finish = '= ' + str(current_state) + ' '
         else:
@@ -76,7 +76,7 @@ def transition(string, start_state, finish_state, transitions):
         # reset start pattern
         start = cap_delta + '(' + start_state
 
-    # after iteration, if intersection of current_state and finsih state
+    # after iteration, if intersection of current_state and finish_state
     # not null, return true (string accepted) else return false
     if len(current_state.intersection(finish_state)):
         return True
