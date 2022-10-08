@@ -24,9 +24,9 @@ def __main__():
 
     # print menu to show NFA machine options
     print('\nPilihan mesin pengecekan:')
-    print('1. String diawali dan diakhiri string yang sama')
-    print('2. String diawali 1 dan jumlah 0 adalah kelipatan 3')
-    print('3. String diawali 0 dan jumlah 1 adalah ganjil')
+    print('1. String dengan prefix 101 dan panjang string genap')
+    print('2. String dengan prefix 101 dan suffix 00')
+    print('3. String suffix 00 dan panjang string kelipatan 3')
 
     # define accepted user choice
     accept_input = ('1', '2', '3')
@@ -45,38 +45,38 @@ def __main__():
     # if user choose option 1
     if choice == '1':
         # call transition fungtion, with its argument (related to 1st NFA machine)
-        result = transition(string, 'q0', {'q3'}, {
-            ('q0', '0'): {'q2', 'q3'},
-            ('q0', '1'): {'q1', 'q3'},
-            ('q1', '0'): {'q1'},
-            ('q1', '1'): {'q1', 'q3'},
-            ('q2', '0'): {'q2', 'q3'},
-            ('q2', '1'): {'q2'}
+        result = transition(string, 'q0', {'q4'}, {
+            ('q0', '1'): {'q1'},
+            ('q1', '0'): {'q2'},
+            ('q2', '1'): {'q3'},
+            ('q3', '0'): {'q4'},
+            ('q3', '1'): {'q4'},
+            ('q4', '0'): {'q3'},
+            ('q4', '1'): {'q3'}
         })
 
     # if user choose option 2
     elif choice == '2':
         # call transition fungtion, with its argument (related to 2nd NFA machine)
-        result = transition(string, 'q0', {'q4'}, {
-            ('q0', '1'): {'q1'},
-            ('q1', '0'): {'q2'},
-            ('q1', '1'): {'q1'},
-            ('q2', '0'): {'q3'},
-            ('q2', '1'): {'q2'},
-            ('q3', '0'): {'q4'},
+        result = transition(string, 'q0', {'q5'}, {
+            ('q0', '1'): {'q3'},
+            ('q0', '0'): {'q3'},
+            ('q2', '1'): {'q3'},
+            ('q3', '0'): {'q3', 'q4'},
             ('q3', '1'): {'q3'},
-            ('q4', '0'): {'q2'},
-            ('q4', '1'): {'q4'}
+            ('q4', '0'): {'q5'}
         })
     # if user choose option 3
     elif choice == '3':
         # call transition fungtion, with its argument (related to 3rd NFA machine)
-        result = transition(string, 'q0', {'q2'}, {
-            ('q0', '0'): {'q1'},
-            ('q1', '0'): {'q1'},
-            ('q1', '1'): {'q2'},
-            ('q2', '0'): {'q2'},
-            ('q2', '1'): {'q1'}
+        result = transition(string, 'q0', {'q5'}, {
+            ('q0', '0'): {'q3'},
+            ('q0', '1'): {'q3'},
+            ('q3', '0'): {'q2', 'q4'},
+            ('q3', '1'): {'q2'},
+            ('q2', '0'): {'q0'},
+            ('q2', '1'): {'q0'},
+            ('q4', '0'): {'q5'},
         })
 
     # print checking result based on transition function's return value
