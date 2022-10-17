@@ -1,3 +1,4 @@
+from email import message
 import pandas as pd
 
 epsilon = '\u03B5'
@@ -28,9 +29,28 @@ def minimal(start_state, final_states, alphabets, transitions):
     fillingTable(table, alphabets, transitions)
     
     new_transitions = minimalization(filledTable, states, transitions)
+    
+    new_states = set()
+    for transition in new_transitions:
+        new_states.add(transition[0])
+    
+    new_start = start_state
+    for state in new_states:
+        if start_state in state.split('/'):
+            new_start = state
+            break
 
+    new_final = set()
+    for final in final_states:
+        for state in new_states:
+            if final in state.split('/'):
+                new_final.add(state)
+                break
+        
     print('After:')
-    result_message(states, alphabets, start_state, final_states, new_transitions)
+    result_message(new_states, alphabets, new_start, new_final, new_transitions)
+
+
 
 
 def fillingEpsilon(table, states, final_states):
