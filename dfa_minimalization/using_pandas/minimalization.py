@@ -34,11 +34,15 @@ def minimal(start_state, final_states, alphabets, transitions):
 
 
 def fillingEpsilon(table, states, final_states):
+    print(table)
     for final in final_states:
         for state in states:
-            if state not in final:
-                table[state][final] = epsilon
-    
+            if state not in final_states:
+                if table[state][final] == '':
+                    table[state][final] = epsilon
+                else:
+                    table[final][state] = epsilon
+    print(table)
     return table
 
 
@@ -78,24 +82,37 @@ def minimalization(filledTable, states, transitions):
         print('DFA cannot be minimized')
         exit()
 
-
-    for key, value in transitions.items():
-        for pair in useless:
-            new_state = '/'.join(pair)
-            if key[0] in pair:
-                domain = (new_state, key[1])
-                if value in useless:
-                    codomain = new_state
-                else:
-                    codomain = value
-                new_transitions[domain] = codomain
-            elif value in pair:
-                new_transitions[key] = new_state
-            else:
-                new_transitions[key] = value
+    useless = useless_combine(useless)
     
+    for key, value in transitions.items():
+        new_key, new_value = -1, -1
+        for i, pair in enumerate(useless):
+            if key[0] in pair: new_key = i
+            if value in pair: new_value = i
+        
+        if new_key != -1: domain = ('/'.join(useless[new_key]), key[1])
+        else: domain = key
+
+        if new_value != -1: codomain = '/'.join(useless[new_value])
+        else: codomain = value
+
+        new_transitions[domain] = codomain
+
     return new_transitions
 
+def useless_combine(useless):
+    new_useless = []
+    for key in useless:
+        combine = set(key)
+        for element in useless:
+            if key == element: continue
+            if key[0] in element or key[1] in element:
+                combine.update(element)
+                useless.pop(useless.index(element))
+        new_useless.append(tuple(combine))
+        useless.pop(useless.index(key))
+    
+    return new_useless
 
 def result_message(states, alphabets, start_state, final_states, transitions):
     print('Detailed description:')
