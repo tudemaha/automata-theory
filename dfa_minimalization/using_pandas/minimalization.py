@@ -20,7 +20,7 @@ def minimal(start_state, final_states, alphabets, transitions):
             else:
                 table[i].append('')
 
-    print('Before:')
+    print('\n--->> BEFORE <<---')
     result_message(states, alphabets, start_state, final_states, transitions)
 
     table = pd.DataFrame(table, index = states, columns = states)
@@ -47,13 +47,14 @@ def minimal(start_state, final_states, alphabets, transitions):
                 new_final.add(state)
                 break
         
-    print('After:')
+    print('\n--->> AFTER <<---')
     result_message(new_states, alphabets, new_start, new_final, new_transitions)
 
 
 
 
 def fillingEpsilon(table, states, final_states):
+    print('\n--->> FILLING TABLE <<---')
     print(table)
     for final in final_states:
         for state in states:
