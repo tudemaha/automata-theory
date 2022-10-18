@@ -10,18 +10,25 @@ def minimal(start_state, final_states, alphabets, transitions):
     global filledTable
     state_count = int(len(transitions) / 2)
 
-    table, states = [], []
+    states = []
     for i in range(state_count):
-        table.append([])
         states.append('q' + str(i))
-        for j in range(state_count):
+
+    print('\n--->> BEFORE <<---')
+    result_message(states, alphabets, start_state, final_states, transitions)
+
+    states = removeState(transitions, states, start_state)
+    states.sort()
+
+
+    table = []
+    for i in range(len(states)):
+        table.append([])
+        for j in range(len(states)):
             if j >= i:
                 table[i].append(empty)
             else:
                 table[i].append('')
-
-    print('\n--->> BEFORE <<---')
-    result_message(states, alphabets, start_state, final_states, transitions)
 
     table = pd.DataFrame(table, index = states, columns = states)
     table = fillingEpsilon(table, states, final_states)
@@ -51,6 +58,30 @@ def minimal(start_state, final_states, alphabets, transitions):
     result_message(new_states, alphabets, new_start, new_final, new_transitions)
 
 
+def removeState(transitions, states, start_state):
+    change = True
+
+    while(change):
+        used_states = set()
+        used_states.add(start_state)
+        change = False
+        for key, value in transitions.items():
+            used_states.add(value)
+
+        delete = []
+        for key in transitions:
+            if key[0] not in used_states:
+                delete.append(key)
+        
+        for key in delete:
+            del transitions[key]
+            change = True
+    
+    if not change:
+        new_states = set()
+        for key in transitions:
+            new_states.add(key[0])
+    return list(new_states)
 
 
 def fillingEpsilon(table, states, final_states):
@@ -131,8 +162,6 @@ def useless_combine(useless):
                 combine.update(element)
                 useless.pop(useless.index(element))
         new_useless.append(tuple(combine))
-        useless.pop(useless.index(key))
-    
     return new_useless
 
 def result_message(states, alphabets, start_state, final_states, transitions):
