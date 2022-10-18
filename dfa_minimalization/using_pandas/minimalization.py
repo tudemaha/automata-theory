@@ -1,4 +1,3 @@
-from email import message
 import pandas as pd
 
 epsilon = '\u03B5'
@@ -19,7 +18,6 @@ def minimal(start_state, final_states, alphabets, transitions):
 
     states = removeState(transitions, states, start_state)
     states.sort()
-
 
     table = []
     for i in range(len(states)):
