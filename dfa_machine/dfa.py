@@ -60,6 +60,6 @@ def transition(string, start_state, finish_state, transitions):
 
 def isAccepted(lastState, finishState):
     if lastState in finishState:
-            print('Status: STRING DITERIMA!')
+        print('Status: STRING DITERIMA!')
     else:
         print('Status: STRING DITOLAK!')
