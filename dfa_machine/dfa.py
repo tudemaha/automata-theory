@@ -5,6 +5,17 @@ epsilon = '\u03B5'
 def printFirstExtended(string):
     print('\n' + cap_delta + '(q0, ' + string + ')', end='\n\n')
 
+def extended(start = '', finish = '', string = ''):
+    parse = [string[:-1], string[-1]]
+
+    if len(parse[0]) > 0:
+        start += delta + '('
+        finish = ', ' + parse[1] + ')' + finish
+        print(start + cap_delta + '(q0, ' + parse[0] + ')' + finish, end='\n\n')
+        extended(start, finish, parse[0])
+    else:
+        print(start + delta + '(' + cap_delta + '(q0, ' + epsilon + '), ' + parse[1] + ')' + finish, end='\n\n')
+
 def printFirstResult(string):
     start = ''
     for char in string:
@@ -17,17 +28,6 @@ def printFirstResult(string):
         finish += ', ' + char + ')'
     
     print(start + mid + finish, end = '\n\n')
-
-def extended(start = '', finish = '', string = ''):
-    parse = [string[:-1], string[-1]]
-
-    if len(parse[0]) > 0:
-        start += delta + '('
-        finish = ', ' + parse[1] + ')' + finish
-        print(start + cap_delta + '(q0, ' + parse[0] + ')' + finish, end='\n\n')
-        extended(start, finish, parse[0])
-    else:
-        print(start + delta + '(' + cap_delta + '(q0, ' + epsilon + '), ' + parse[1] + ')' + finish, end='\n\n')
 
 def transition(string, start_state, finish_state, transitions):
     parse = [string[0], string[1:]]
@@ -55,7 +55,11 @@ def transition(string, start_state, finish_state, transitions):
         current_state = transitions[(start_state, parse[0])]
         print(current_state, end ='\n\n')
 
-        if current_state in finish_state:
+        isAccepted(current_state, finish_state)
+        
+
+def isAccepted(lastState, finishState):
+    if lastState in finishState:
             print('Status: STRING DITERIMA!')
-        else:
-            print('Status: STRING DITOLAK!')
+    else:
+        print('Status: STRING DITOLAK!')
