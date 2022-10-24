@@ -17,7 +17,6 @@ def insertChoice():
     while(True):
         print('Masukkan pilihan: ', end='')
         choice = input()
-        accept_choice = ['1', '2', '3']
 
         if isMember(choice, ['1', '2', '3']):
             break
