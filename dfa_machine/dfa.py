@@ -1,3 +1,5 @@
+from checking import isAccepted
+
 delta = '\u03B4'
 cap_delta = '\u03B4\u0302'
 epsilon = '\u03B5'
@@ -55,11 +57,7 @@ def transition(string, start_state, finish_state, transitions):
         current_state = transitions[(start_state, parse[0])]
         print(current_state, end ='\n\n')
 
-        isAccepted(current_state, finish_state)
-        
-
-def isAccepted(lastState, finishState):
-    if lastState in finishState:
-        print('Status: STRING DITERIMA!')
-    else:
-        print('Status: STRING DITOLAK!')
+        if isAccepted(current_state, finish_state):
+            print('Status: STRING DITERIMA!')
+        else:
+            print('Status: STRING DITOLAK!')
