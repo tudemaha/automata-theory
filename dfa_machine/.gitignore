@@ -1,0 +1,3 @@
+# Ignore all __pycache__
+__pycache__/*
+menu/__pycache__/*
