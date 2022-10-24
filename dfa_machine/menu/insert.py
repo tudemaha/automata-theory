@@ -1,4 +1,3 @@
-from inspect import ismemberdescriptor
 from checking import isMember
 
 def insertString():
