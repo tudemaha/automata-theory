@@ -1,6 +1,8 @@
 import numpy as np
 from itertools import permutations
 
+empty = '\u2205'
+
 # create the filling table
 def create_table(string):
     table = []
@@ -23,37 +25,53 @@ def filling_bottom(cnf, table, string):
                 cell.add(row[0])
         table[i][i] = cell
 
-def filling_all(cnf, table):
+def filling_all(cnf, table, row = 1):
     if table[len(table) - 1][0] != set():
         # print(table[len(table) - 1][0])
         return
+    
+    # print(row)
+    next_row = iteration(cnf, table, row)
 
-    for i in range(1, len(table)):
-        for j in range(len(table) - 2, -1, -1):
-            if table[i][j] == set():
-                
-                list_of_intersect = []
-                for k in range(i + 1):
-                    if table[k][i] != '=': list_of_intersect.append(table[k][i])
-                for k in range(j + 1):
-                    if table[j][k] != '=': list_of_intersect.append(table[j][k])
-                
-                # print(list_of_intersect)
-                result_list = make_permutation(list_of_intersect)
-                # print(result_list)
-                combine_result = combine(result_list)
-                # print(combine_result)
+    # print('huhu')
+    filling_all(cnf, table, next_row)
 
-                table[i][j] = find_cnf(combine_result, cnf)
-                print('\n', table)
 
-                break
-        else:
-            continue
-        break
+def iteration(cnf, table, row):
+    i = row
+    #  for i in range(1, len(table)):
+    for j in range(len(table) - 1, -1, -1):
+        if table[i][j] == set():
+            # print('koordinat:',i, j)
+            
+            list_of_intersect = []
+            for k in range(0, i):
+                # print('k', k, j)
+                if table[k][j] == empty: list_of_intersect.append(set())
+                elif table[k][j] != '=' and table[k][j] != set(): list_of_intersect.append(table[k][j])
 
-    filling_all(cnf, table)
+            for k in range(j + 1, len(table)):
+                # print('b', i, k)
+                # print(table[i][k])
+                if table[i][k] == empty: list_of_intersect.append(set())
+                elif table[i][k] != '=' and table[i][k] != set(): list_of_intersect.append(table[i][k])
+            
+            # print('perpotongan:', list_of_intersect)
+            result_list = make_permutation(list_of_intersect)
+            # print('hasil permutasi:',result_list)
+            combine_result = combine(result_list)
+            # print('kombinasi: ',combine_result)
 
+            table[i][j] = find_cnf(combine_result, cnf)
+            print(table, '\n')
+
+            i = (i + 1) if i + 1 < len(table) else 1
+            return i
+        
+    i = (i + 1) if i + 1 < len(table) else 1
+    return i
+
+    
 def make_permutation(list_input):
     count = (len(list_input) // 2)
 
@@ -64,12 +82,10 @@ def make_permutation(list_input):
 
         combination.append([])
 
-        permut = permutations(list1, len(list2))
+        for element1 in list1:
+            for element2 in list2:
+                combination[i].append(f'{element1}{element2}')
 
-        for comb in permut:
-            zipped = zip(comb, list2)
-            combination[i].append(list(zipped))
-    
     return combination
 
 def combine(list_of_set):
@@ -77,7 +93,7 @@ def combine(list_of_set):
 
     for x in list_of_set:
         for y in x:
-            result_set.add(''.join(*y))
+            result_set.add(y)
 
     return result_set
 
@@ -88,9 +104,8 @@ def find_cnf(combine, cnf):
         for row in cnf:
             if com in row[1]:
                 cnf_return.add(row[0])
-                break
     
     if cnf_return == set():
-        return 'Ø'
+        return empty
     else:
         return cnf_return

@@ -27,18 +27,17 @@ def find_non_terminal(cfg):
 
 # remove the unit from cfg
 def remove_unit(one_non_terminal, cfg):
-    temp_body = []
 
     for i, index in enumerate(one_non_terminal):
-        temp_body.append(set())
+        temp_body = set()
 
         cfg[index[0]][1].remove(index[1])
         for row in cfg:
             if row[0] == index[1]:
-                temp_body[i] = temp_body[i].union(row[1])
-        
-    for i, index in enumerate(one_non_terminal):
-        cfg[index[0]][1] = cfg[index[0]][1].union(temp_body[i])
+                temp_body = temp_body.union(row[1])
+    
+        # print(temp_body)
+        cfg[index[0]][1] = cfg[index[0]][1].union(temp_body)
 
 # remove the unaccessable rules
 def remove_unaccessable(cfg):

@@ -1,3 +1,4 @@
+import numpy as np
 from cfg_to_cnf import conversion
 from triangular_table import *
 cfg = [
@@ -10,11 +11,10 @@ cfg = [
 ]
 
 cnf = conversion(cfg)
+print(np.array(cnf), '\n')
 
-string = 'bbaba'
+string = 'abab'
 
 table = create_table(string)
 filling_bottom(cnf, table, string)
 filling_all(cnf, table)
-
-print('\n', cnf)
