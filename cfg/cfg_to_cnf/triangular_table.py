@@ -1,5 +1,5 @@
 import numpy as np
-from itertools import permutations
+from pandas import DataFrame
 
 empty = '\u2205'
 
@@ -28,6 +28,8 @@ def filling_bottom(cnf, table, string):
 def filling_all(cnf, table, row = 1):
     if table[len(table) - 1][0] != set():
         # print(table[len(table) - 1][0])
+        if 'T*' in table[len(table) - 1][0]: print('\nStatus: STRING ACCEPTED')
+        else: print('\nStatus STRING NOT ACCEPTED')
         return
     
     # print(row)
@@ -63,7 +65,8 @@ def iteration(cnf, table, row):
             # print('kombinasi: ',combine_result)
 
             table[i][j] = find_cnf(combine_result, cnf)
-            print(table, '\n')
+            
+            print(DataFrame(table), '\n')
 
             i = (i + 1) if i + 1 < len(table) else 1
             return i
