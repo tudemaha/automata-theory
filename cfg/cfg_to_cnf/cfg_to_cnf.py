@@ -14,12 +14,3 @@ def conversion(cfg):
     remove_more_two(cfg)  
 
     return cfg
-
-# print(conversion(cfg = [
-#     ['T', {'TT'}],
-#     ['T', {'A'}],
-#     ['A', {'aAa'}],
-#     ['A', {'bB'}],
-#     ['B', {'bB'}],
-#     ['B', {'ε'}]
-# ]))
