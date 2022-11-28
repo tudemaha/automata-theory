@@ -1,4 +1,4 @@
-from triangular_table import *
+from cyk_conversion.triangular_table import *
 
 def cyk_algorithm(cnf, string):
     table = create_table(string)

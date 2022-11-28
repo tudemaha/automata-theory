@@ -1,5 +1,8 @@
-# pthon
+# python
 __pycache__/*
+cfg/__pycache__/*
+cfg/cfg_to_cnf/__pycache__/*
+cfg/cyk_conversion/__pycache__/*
 
 # VS Code settings
 .vscode/*

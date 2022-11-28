@@ -1,6 +1,6 @@
 from numpy import array
-from cfg_to_cnf import conversion
-from cyk_conversion import cyk_algorithm
+from cfg_to_cnf.cfg_to_cnf import conversion
+from cyk_conversion.cyk_conversion import cyk_algorithm
 
 cfg = [
     ['T', {'TT'}],
