@@ -11,7 +11,7 @@ def remove_more_two(cfg):
     # make a deepcopy of cfg
     temp_cfg = deepcopy(cfg)
     
-    # 
+    # empty set to store the new rule added
     used = []
 
     # iterate every rule in temp_cfg
